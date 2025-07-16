@@ -23,7 +23,7 @@ export default function Host() {
     }
 
     try {
-      const res = await fetch("https://bahoot.onrender.com/create_game", {
+      const res = await fetch("https://backend-bahoot.vercel.app/create_game", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

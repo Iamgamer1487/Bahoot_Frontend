@@ -15,7 +15,7 @@ export default function StartGameHost() {
 
   async function fetchGameId(uid: string) {
     try {
-      const res = await fetch(`https://bahoot.onrender.com/user_game_host/${uid}`, {
+      const res = await fetch(`https://backend-bahoot.vercel.app/user_game_host/${uid}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ host_id: uid }),
@@ -29,7 +29,7 @@ export default function StartGameHost() {
 
   async function fetchPlayerNames(gameId: string) {
     try {
-      const res = await fetch("https://bahoot.onrender.com/game_players_display_names", {
+      const res = await fetch("https://backend-bahoot.vercel.app/game_players_display_names", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ game_id: gameId }),
@@ -45,7 +45,7 @@ export default function StartGameHost() {
 
   async function startGame() {
     try {
-      const res = await fetch(`https://bahoot.onrender.com/start_game/${gameId}`, {
+      const res = await fetch(`https://backend-bahoot.vercel.app/start_game/${gameId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id: user?.uid }),
@@ -101,7 +101,7 @@ export default function StartGameHost() {
     if (!gameId) return;
     const interval = setInterval(async () => {
       try {
-        const res = await fetch(`https://bahoot.onrender.com/game_state_check/${gameId}`, {
+        const res = await fetch(`https://backend-bahoot.vercel.app/game_state_check/${gameId}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
         });

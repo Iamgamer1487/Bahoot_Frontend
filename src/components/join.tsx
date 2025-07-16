@@ -23,7 +23,7 @@ export default function Join() {
     e.preventDefault();
     setMessage('');
     try {
-      const response = await fetch(`https://bahoot.onrender.com/join_game/${gameId}`, {
+      const response = await fetch(`https://backend-bahoot.vercel.app/join_game/${gameId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ "player_id": user?.uid }),

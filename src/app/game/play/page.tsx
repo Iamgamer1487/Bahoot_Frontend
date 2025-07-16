@@ -81,7 +81,7 @@ export default function QuestionPage() {
       if (!user?.uid) return;
 
       try {
-        const res = await fetch("https://bahoot.onrender.com/user_game_player/" + user.uid, {
+        const res = await fetch("https://backend-bahoot.vercel.app/user_game_player/" + user.uid, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ host_id: user.uid }),
@@ -102,7 +102,7 @@ export default function QuestionPage() {
 
     const fetchState = async () => {
       try {
-        const res = await fetch("https://bahoot.onrender.com/get_question_state", {
+        const res = await fetch("https://backend-bahoot.vercel.app/get_question_state", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ game_id: gameId }),
@@ -158,7 +158,7 @@ export default function QuestionPage() {
           setAnswered(true);
           setFeedback("Time's up!");
 
-          await fetch("https://bahoot.onrender.com/answer/" + gameId, {
+          await fetch("https://backend-bahoot.vercel.app/answer/" + gameId, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -173,7 +173,7 @@ export default function QuestionPage() {
       }
 
       try {
-        const scoreRes = await fetch("https://bahoot.onrender.com/leaderboard/" + gameId, {
+        const scoreRes = await fetch("https://backend-bahoot.vercel.app/leaderboard/" + gameId, {
           method: "POST",
         });
         const scoreData = await scoreRes.json();
@@ -204,7 +204,7 @@ export default function QuestionPage() {
     if (answered || !playerId || !gameId || state.time_left <= 0) return;
 
     try {
-      const res = await fetch("https://bahoot.onrender.com/answer/" + gameId, {
+      const res = await fetch("https://backend-bahoot.vercel.app/answer/" + gameId, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -241,7 +241,7 @@ export default function QuestionPage() {
     if (!sure) return;
 
     try {
-      await fetch("https://bahoot.onrender.com/leave_game/" + gameId, {
+      await fetch("https://backend-bahoot.vercel.app/leave_game/" + gameId, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ player_id: playerId }),

@@ -30,7 +30,7 @@ export default function Podium() {
         setLoading(true);
         setError(null);
 
-        const res = await fetch(`https://bahoot.onrender.com/user_game_player/${uid}`, {
+        const res = await fetch(`https://backend-bahoot.vercel.app/user_game_player/${uid}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ host_id: uid }), // This body is not actually needed for this route.
@@ -57,7 +57,7 @@ export default function Podium() {
 
     async function fetchPlace() {
       try {
-        const res = await fetch(`https://bahoot.onrender.com/leaderboard/${gameId}`, {
+        const res = await fetch(`https://backend-bahoot.vercel.app/leaderboard/${gameId}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
         });
