@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     description: "Bahoot is the new revolutionary tool for teachers to create quiz games for students to enjoy.",
     images: [
       {
-        url: "https://hda-breakfast.vercel.app/icon.png",
+        url: "/favicon.png",
         width: 128,
         height: 128,
         alt: "Bahoot logo",

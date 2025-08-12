@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Roboto_Mono } from "next/font/google";
-import "./globals.css";
 
 const geistSans = Inter({
   variable: "--font-geist-sans",
@@ -13,7 +12,7 @@ const geistMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bahoot | The new educational tool for teachers",
+  title: "Dashboard | Bahoot",
   keywords: [
     "Bahoot",
     "quiz",

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
+import { onSnapshot } from "firebase/firestore";
 import router from "next/router";
 
 type LeaderboardEntry = {
@@ -88,8 +89,8 @@ export default function Leaderboard({ title = "Leaderboard" }: LeaderboardProps)
 
     const data = await res.json();
 
-    if (data.message === "Redirect") {
-      router.push("/");
+  if (data.Game_Over === true)   {
+      router.push("/game/play/podium");
       return;
     }
 
@@ -128,13 +129,12 @@ export default function Leaderboard({ title = "Leaderboard" }: LeaderboardProps)
   }, []);
 
   return (
-    <div className="min-h-screen h-auto select-none bg-gradient-to-tr from-sky-800 to-green-600 p-8 flex flex-col justify-between relative">
-      {/* next btn + timer */}
+    <div className="min-h-screen h-auto select-none bg-slate-950 from-sky-800 to-green-600 p-8 flex flex-col justify-between relative">
       <div className="absolute top-5 left-5 space-y-2 z-50">
         <button
-          className={`bg-blue-500 cursor-pointer text-white px-5 py-2 rounded-xl shadow-lg transition-all duration-300 active:scale-95 ${
+          className={`bg-emerald-600 cursor-pointer text-white px-5 py-2 rounded-lg shadow-lg transition-all duration-300 active:scale-95 ${
             questionExpired
-              ? "opacity-100 hover:bg-blue-600"
+              ? "opacity-100 hover:bg-emerald-700"
               : "opacity-0 pointer-events-none"
           }`}
           onClick={nextQuestion}
@@ -142,7 +142,7 @@ export default function Leaderboard({ title = "Leaderboard" }: LeaderboardProps)
           Next
         </button>
         {!questionExpired && (
-          <p className="text-white absolute top-0 left-0 text-nowrap font-bold text-sm opacity-90">
+          <p className="text-indigo-100 absolute top-0 left-0 text-nowrap font-bold text-sm opacity-90">
             Time left: {timeLeft}s
           </p>
         )}
@@ -150,7 +150,7 @@ export default function Leaderboard({ title = "Leaderboard" }: LeaderboardProps)
 
       {/* leaderboard */}
       <div>
-        <h1 className="text-white text-4xl text-center mb-10 drop-shadow-[0_0_10px_#42f5d7]">
+        <h1 className="text-white text-4xl text-center mb-10 drop-shadow-[0_0_1px_#42f5d7]">
           {title}
         </h1>
 
@@ -174,7 +174,7 @@ export default function Leaderboard({ title = "Leaderboard" }: LeaderboardProps)
                     ? "bg-gray-300"
                     : player.rank === 3
                     ? "bg-yellow-600"
-                    : "bg-red-600"
+                    : "bg-emerald-600"
                 }`}
               >
                 <span className="font-bold text-black flex-1">{player.rank}</span>
@@ -189,8 +189,6 @@ export default function Leaderboard({ title = "Leaderboard" }: LeaderboardProps)
           )}
         </div>
       </div>
-
-{/* game id */}
 <div className="absolute top-0 right-0 mt-3 mr-3 group select-none z-50">
   <button
     onClick={() => {

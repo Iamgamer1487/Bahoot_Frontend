@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     description: "Host your quiz game for people to join and play.",
     images: [
       {
-        url: "https://hda-breakfast.vercel.app/icon.png",
+        url: "/favicon.png",
         width: 128,
         height: 128,
         alt: "Bahoot logo",

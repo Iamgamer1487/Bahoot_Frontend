@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Roboto_Mono } from "next/font/google";
-import "./globals.css";
 
 const geistSans = Inter({
   variable: "--font-geist-sans",
@@ -13,7 +12,7 @@ const geistMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bahoot | The new educational tool for teachers",
+  title: "Create a Set | Bahoot",
   keywords: [
     "Bahoot",
     "quiz",
@@ -62,7 +61,7 @@ export const metadata: Metadata = {
     "teacher quiz game",
   ],
   description:
-    "Bahoot is the new revolutionary tool for teachers to create quiz games. Being fun, engaging, and educational, students will definitely enjoy Bahoot.",
+    "Create a quiz set for your students with Bahoot.",
   openGraph: {
     title: "Bahoot | The new educational tool for teachers",
     description:
@@ -77,7 +76,7 @@ export const metadata: Metadata = {
     ],
   },
   icons: {
-    icon: "https://hda-breakfast.vercel.app/icon.png", // nextjs injects favicon automatically
+    icon: "https://hda-breakfast.vercel.app/icon.png",
   },
 };
 
@@ -87,9 +86,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     ><head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0  " />
