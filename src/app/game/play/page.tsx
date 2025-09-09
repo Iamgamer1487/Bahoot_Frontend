@@ -16,24 +16,37 @@ type QuestionState = {
   Game_Over?: boolean;
   correct_answer?: string;
 };
-
 const loaders = [
+  // Loader 1: Smooth spinning ring
   () => (
     <div className="flex items-center justify-center w-full h-full">
-      <div className="w-16 h-16 border-4 border-purple-500 border-t-transparent animate-spin rounded-full" />
+      <div className="w-16 h-16 border-4 border-purple-500/40 border-t-purple-500 rounded-full animate-spin" />
     </div>
   ),
+
+  // Loader 2: Bouncing dots with smooth ease
   () => (
     <div className="flex items-center justify-center gap-2 w-full h-full">
       {[...Array(4)].map((_, i) => (
         <div
           key={i}
-          className="w-4 h-4 bg-pink-400 rounded-full animate-bounce"
-          style={{ animationDelay: `${i * 0.15}s` }}
+          className="w-4 h-4 bg-pink-400 rounded-full"
+          style={{
+            animation: "bounce-smooth 0.8s ease-in-out infinite",
+            animationDelay: `${i * 0.15}s`,
+          }}
         />
       ))}
+      <style jsx>{`
+        @keyframes bounce-smooth {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
+        }
+      `}</style>
     </div>
   ),
+
+  // Loader 3: Circular orbit pings
   () => (
     <div className="flex items-center justify-center w-full h-full">
       <div className="relative w-20 h-20">
@@ -42,33 +55,52 @@ const loaders = [
           return (
             <div
               key={i}
-              className="absolute w-3 h-3 bg-sky-400 rounded-full animate-ping"
+              className="absolute w-3 h-3 bg-sky-400 rounded-full"
               style={{
                 top: "50%",
                 left: "50%",
                 transform: `rotate(${angle}deg) translate(30px)`,
                 transformOrigin: "center",
+                animation: "ping-smooth 1.2s ease-in-out infinite",
                 animationDelay: `${i * 0.1}s`,
               }}
             />
           );
         })}
+        <style jsx>{`
+          @keyframes ping-smooth {
+            0% { transform: scale(0.8); opacity: 0.6; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.8); opacity: 0.6; }
+          }
+        `}</style>
       </div>
     </div>
   ),
-  // Loader 4: Dots growing and shrinking
+
+  // Loader 4: Pulsing dots
   () => (
     <div className="flex items-center justify-center w-full h-full gap-2">
       {[...Array(5)].map((_, i) => (
         <div
           key={i}
-          className="w-4 h-4 bg-yellow-400 rounded-full animate-pulse"
-          style={{ animationDelay: `${i * 0.12}s` }}
+          className="w-4 h-4 bg-yellow-400 rounded-full"
+          style={{
+            animation: "pulse-smooth 1s ease-in-out infinite",
+            animationDelay: `${i * 0.12}s`,
+          }}
         />
       ))}
+      <style jsx>{`
+        @keyframes pulse-smooth {
+          0%, 100% { transform: scale(0.8); opacity: 0.5; }
+          50% { transform: scale(1.2); opacity: 1; }
+        }
+      `}</style>
     </div>
   ),
-  // Loader 5: Bars rising and falling (centered)
+
+  // Loader 5: Equalizer bars
   () => (
     <div className="flex items-center justify-center w-full h-full">
       <div className="flex items-end gap-1">
@@ -78,7 +110,7 @@ const loaders = [
             className="w-2 bg-green-400 rounded-t"
             style={{
               height: "24px",
-              animation: "bar-bounce 1s infinite",
+              animation: "bar-bounce 1s ease-in-out infinite",
               animationDelay: `${i * 0.1}s`,
             }}
           />
@@ -86,18 +118,14 @@ const loaders = [
       </div>
       <style jsx>{`
         @keyframes bar-bounce {
-          0%,
-          100% {
-            height: 24px;
-          }
-          50% {
-            height: 53px;
-          }
+          0%, 100% { height: 24px; }
+          50% { height: 53px; }
         }
       `}</style>
     </div>
   ),
-  // Loader 6: Smooth rotating squares
+
+  // Loader 6: Rotating squares
   () => (
     <div className="flex items-center justify-center w-full h-full">
       <div className="relative w-16 h-16 animate-rotate-smooth">
@@ -119,18 +147,17 @@ const loaders = [
         })}
         <style jsx>{`
           .animate-rotate-smooth {
-            animation: rotate-smooth 1.5s ease-out alternate infinite;
+            animation: rotate-smooth 1.5s ease-in-out infinite;
           }
           @keyframes rotate-smooth {
-            100% {
-              transform: rotate(360deg);
-            }
+            100% { transform: rotate(360deg); }
           }
         `}</style>
       </div>
     </div>
   ),
-  // Loader 7: Ripple effect
+
+  // Loader 7: Ripple
   () => (
     <div className="flex items-center justify-center w-full h-full">
       <span className="relative flex h-16 w-16">
@@ -139,7 +166,8 @@ const loaders = [
       </span>
     </div>
   ),
-  // Loader 8: Spinning triangles
+
+  // Loader 8: Spinning triangle
   () => (
     <div className="flex items-center justify-center w-full h-full">
       <svg
@@ -152,16 +180,15 @@ const loaders = [
       </svg>
       <style jsx>{`
         .animate-spin-slow {
-          animation: spin-slow 1.8s ease infinite;
+          animation: spin-slow 1.8s ease-in-out infinite;
         }
         @keyframes spin-slow {
-          100% {
-            transform: rotate(360deg);
-          }
+          100% { transform: rotate(360deg); }
         }
       `}</style>
     </div>
   ),
+
   // Loader 9: Orbiting dots
   () => (
     <div className="flex items-center justify-center w-full h-full">
@@ -186,43 +213,206 @@ const loaders = [
         })}
         <style jsx>{`
           @keyframes orbit {
-            100% {
-              transform: rotate(360deg) translate(32px);
-            }
+            100% { transform: rotate(360deg) translate(32px); }
           }
         `}</style>
       </div>
     </div>
   ),
-  // Loader 10: Colorful fading bars
+
+  // Loader 10: Color fade bars
   () => (
     <div className="flex items-center justify-center w-full h-full gap-1">
-      {[
-        "bg-red-400",
-        "bg-yellow-400",
-        "bg-green-400",
-        "bg-blue-400",
-        "bg-purple-400",
-      ].map((color, i) => (
+      {["bg-red-400","bg-yellow-400","bg-green-400","bg-blue-400","bg-purple-400"].map((color, i) => (
         <div
           key={i}
-          className={`w-3 h-10 ${color} rounded animate-fade-bar`}
+          className={`w-3 h-10 ${color} rounded`}
           style={{
+            animation: "fade-bar 1.2s ease-in-out infinite",
             animationDelay: `${i * 0.15}s`,
           }}
         />
       ))}
       <style jsx>{`
-        .animate-fade-bar {
-          animation: fade-bar 1.2s infinite;
-        }
         @keyframes fade-bar {
-          0%,
-          100% {
-            opacity: 0.3;
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 1; }
+        }
+      `}</style>
+    </div>
+  ),
+
+  // NEW Loader 11: Spinning dual ring
+  () => (
+    <div className="flex items-center justify-center w-full h-full">
+      <div className="relative w-16 h-16">
+        <div className="absolute inset-0 border-4 border-emerald-400 rounded-full animate-spin"></div>
+        <div className="absolute inset-2 border-4 border-transparent border-t-emerald-500 rounded-full animate-spin-slow"></div>
+      </div>
+      <style jsx>{`
+        .animate-spin-slow {
+          animation: spin-slow 2s linear infinite;
+        }
+        @keyframes spin-slow {
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
+    </div>
+  ),
+
+  // NEW Loader 12: Rotating cube
+  () => (
+    <div className="flex items-center justify-center w-full h-full">
+      <div className="w-12 h-12 bg-indigo-500 animate-rotate-cube" />
+      <style jsx>{`
+        .animate-rotate-cube {
+          animation: rotate-cube 1.2s ease-in-out infinite;
+        }
+        @keyframes rotate-cube {
+          0% { transform: perspective(100px) rotateX(0deg) rotateY(0deg); }
+          50% { transform: perspective(100px) rotateX(180deg) rotateY(0deg); }
+          100% { transform: perspective(100px) rotateX(180deg) rotateY(180deg); }
+        }
+      `}</style>
+    </div>
+  ),
+
+  // NEW Loader 13: Concentric pulse rings
+  () => (
+    <div className="flex items-center justify-center w-full h-full relative">
+      <div className="absolute w-16 h-16 rounded-full border-4 border-blue-400 animate-pulse-ring" />
+      <div className="absolute w-12 h-12 rounded-full border-4 border-blue-300 animate-pulse-ring delay-150" />
+      <div className="absolute w-8 h-8 rounded-full border-4 border-blue-200 animate-pulse-ring delay-300" />
+      <style jsx>{`
+        .animate-pulse-ring {
+          animation: pulse-ring 1.5s ease-out infinite;
+        }
+        @keyframes pulse-ring {
+          0% { transform: scale(0.8); opacity: 0.6; }
+          50% { transform: scale(1.2); opacity: 1; }
+          100% { transform: scale(0.8); opacity: 0.6; }
+        }
+        .delay-150 { animation-delay: 0.15s; }
+        .delay-300 { animation-delay: 0.3s; }
+      `}</style>
+    </div>
+  ),
+
+  // NEW Loader 14: Sliding gradient bar
+  () => (
+    <div className="flex items-center justify-center w-full h-full">
+      <div className="w-32 h-2 bg-gradient-to-r from-transparent via-emerald-400 to-transparent animate-slide-gradient" />
+      <style jsx>{`
+        .animate-slide-gradient {
+          background-size: 200% 100%;
+          animation: slide-gradient 1.2s linear infinite;
+        }
+        @keyframes slide-gradient {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+      `}</style>
+    </div>
+  ),
+  // NEW Loader 15: Single morphing gradient blob
+  () => (
+    <div className="flex items-center justify-center w-full h-full">
+      <div className="w-20 h-20 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 animate-blob" style={{ filter: 'blur(4px)' }} />
+      <style jsx>{`
+        .animate-blob {
+          animation: blob 6s ease-in-out infinite;
+        }
+        @keyframes blob {
+          0%, 100% {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+          }
+          25% {
+            border-radius: 50% 60% 70% 40% / 70% 50% 50% 60%;
           }
           50% {
-            opacity: 1;
+            border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%;
+          }
+          75% {
+            border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;
+          }
+        }
+      `}</style>
+    </div>
+  ),
+
+  // NEW Loader 16: Two overlapping morphing blobs
+  () => (
+    <div className="flex items-center justify-center w-full h-full relative">
+      <div className="absolute w-24 h-24 bg-gradient-to-r from-emerald-400 to-cyan-500 animate-blob" style={{ filter: 'blur(12px)', opacity: 0.7 }} />
+      <div className="absolute w-24 h-24 bg-gradient-to-r from-pink-400 to-purple-500 animate-blob" style={{ filter: 'blur(12px)', opacity: 0.7, animationDelay: '3s' }} />
+      <style jsx>{`
+        .animate-blob {
+          animation: blob 8s ease-in-out infinite;
+        }
+        @keyframes blob {
+          0%, 100% {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+          }
+          25% {
+            border-radius: 50% 60% 70% 40% / 70% 50% 50% 60%;
+          }
+          50% {
+            border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%;
+          }
+          75% {
+            border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;
+          }
+        }
+      `}</style>
+    </div>
+  ),
+
+  // NEW Loader 17: Blurred morphing blob ring
+  () => (
+    <div className="flex items-center justify-center w-full h-full">
+      <div className="w-24 h-24 border-8 border-transparent border-t-pink-400 border-b-purple-500 animate-blob" style={{ filter: 'blur(6px)' }} />
+      <style jsx>{`
+        .animate-blob {
+          animation: blob 7s ease-in-out infinite;
+        }
+        @keyframes blob {
+          0%, 100% {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+          }
+          25% {
+            border-radius: 50% 60% 70% 40% / 70% 50% 50% 60%;
+          }
+          50% {
+            border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%;
+          }
+          75% {
+            border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;
+          }
+        }
+      `}</style>
+    </div>
+  ),
+  () => (
+    <div className="flex items-center justify-center w-full h-full relative">
+      <div className="absolute w-28 h-28 bg-gradient-to-r from-indigo-500 to-purple-600 animate-blob" style={{ filter: 'blur(20px)', opacity: 0.6 }} />
+      <div className="absolute w-28 h-28 bg-gradient-to-r from-pink-500 to-red-500 animate-blob" style={{ filter: 'blur(20px)', opacity: 0.6, animationDelay: '2s' }} />
+      <div className="absolute w-28 h-28 bg-gradient-to-r from-yellow-400 to-orange-500 animate-blob" style={{ filter: 'blur(20px)', opacity: 0.6, animationDelay: '4s' }} />
+      <style jsx>{`
+        .animate-blob {
+          animation: blob 10s ease-in-out infinite;
+        }
+        @keyframes blob {
+          0%, 100% {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+          }
+          25% {
+            border-radius: 50% 60% 70% 40% / 70% 50% 50% 60%;
+          }
+          50% {
+            border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%;
+          }
+          75% {
+            border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;
           }
         }
       `}</style>
@@ -400,7 +590,7 @@ const router = useRouter();
       ) {
         setAnswered(true);
         setShowLoader(false);
-        setFeedback("Time's up! You didn't answer.");
+        setFeedback(`Time's up! You didn't answer. Correct Answer is: ${state.correct_answer}`);
 
         try {
           await fetch(`https://backend-bahoot.vercel.app/answer/` + gameId, {
@@ -507,8 +697,7 @@ const router = useRouter();
   };
 
   const showOverallLoader = initialLoading || !isGameActive || showLoader;
-
-  return (
+ return (
     <div className="bg-slate-950 min-h-screen w-full flex flex-col select-none relative">
       <style jsx global>{`
         ::-webkit-scrollbar {
@@ -521,7 +710,22 @@ const router = useRouter();
         html, body, div {
           -ms-overflow-style: none;
         }
+        @keyframes blob {
+          0%, 100% {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+          }
+          25% {
+            border-radius: 50% 60% 70% 40% / 70% 50% 50% 60%;
+          }
+          50% {
+            border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%;
+          }
+          75% {
+            border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;
+          }
+        }
       `}</style>
+
       {showOverallLoader && (
         <div className="absolute top-0 left-0 w-full h-full bg-slate-950 bg-opacity-80 z-50 flex items-center justify-center">
           {initialLoading ? (
@@ -534,14 +738,22 @@ const router = useRouter();
               <p>Waiting for host to start the game</p>
             </div>
           ) : (
-            <>
-            <div className="flex flex-center justify-center rounded-full items-center">
-              <div className="absolute w-10 h-10 p-13 text-center items-center justify-center flex flex-center rounded-full animate-bounce bg-emerald-600 top-1/2 right-8 text-4xl font-bold">
-                <p className="p-3 text-indigo-100">{state.time_left}</p>
+            <div className="flex flex-col items-center justify-center">
+              <div className="relative w-40 h-40 mb-6">
+                <div
+                  className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 animate-blob"
+                  style={{
+                    animation: 'blob 7s infinite',
+                    filter: 'blur(12px)',
+                    opacity: 0.7
+                  }}
+                ></div>
+                <div className="absolute inset-0 flex items-center justify-center text-6xl font-bold text-white">
+                  {state.time_left}
+                </div>
               </div>
               {randomLoader}
-              </div>
-            </>
+            </div>
           )}
         </div>
       )}
@@ -550,17 +762,20 @@ const router = useRouter();
         <>
           <div className="flex justify-between items-center px-8 pt-6 z-10 relative">
             <div className="text-2xl right-0 top-0 absolute mr-3 mt-3 font-bold text-indigo-400">
-              Time Left: {state.time_left} seconds
+              <div className="flex items-center">
+                <div className="w-4 h-4 bg-indigo-400 rounded-full mr-2 animate-pulse"></div>
+                Time Left: {state.time_left}s
+              </div>
             </div>
             <div className="text-2xl left-0 top-0 absolute mt-3 ml-3 font-bold text-indigo-200">
-              Answers: {state.answered_count}
+              Answers: {state.answered_count}/{state.total_players}
             </div>
           </div>
 
           <div className="p-3 text-center text-2xl font-bold text-indigo-200 absolute bottom-0 mb-2 right-0">
             <button
               onClick={handleLeave}
-              className="rounded-lg p-2 cursor-pointer shadow-lg bg-slate-800 border border-indigo-400 max-w-3xl hover:bg-slate-700 transition-colors duration-200 text-indigo-200 font-semibold"
+              className="rounded-lg p-2 cursor-pointer z-[39372526359993271697697619273679] shadow-lg bg-slate-800 border border-indigo-400 max-w-3xl hover:bg-slate-700 transition-colors duration-200 text-indigo-200 font-semibold"
             >
               Leave Game
             </button>
@@ -569,18 +784,15 @@ const router = useRouter();
           <div className="bg-slate-800 py-8 px-6 rounded-b-lg shadow-md text-center mt-5 border-b border-indigo-400">
             <p className="font-bold text-5xl text-indigo-100">{state.question}</p>
           </div>
-
-          <div className="flex-grow p-6">
-            <div className="grid grid-cols-2 grid-rows-2 gap-6 h-full">
+          <div className="flex-grow p-6 flex flex-col" style={{ minHeight: '60vh' }}>
+            <div className="grid grid-cols-2 grid-rows-2 gap-6 h-full w-full flex-grow">
               {state.options.map((option, i) => {
-                const color =
-                  i === 0
-                    ? "bg-indigo-600 hover:bg-indigo-700"
-                    : i === 1
-                    ? "bg-slate-700 hover:bg-slate-800"
-                    : i === 2
-                    ? "bg-emerald-700 hover:bg-emerald-800"
-                    : "bg-orange-500 hover:bg-orange-600";
+                const colors = [
+                  "bg-gradient-to-br from-indigo-600 to-indigo-800 hover:from-indigo-700 hover:to-indigo-900",
+                  "bg-gradient-to-br from-slate-700 to-slate-900 hover:from-slate-800 hover:to-slate-950",
+                  "bg-gradient-to-br from-emerald-700 to-emerald-900 hover:from-emerald-800 hover:to-emerald-950",
+                  "bg-gradient-to-br from-orange-500 to-orange-700 hover:from-orange-600 hover:to-orange-800"
+                ];
 
                 const isSelected = selectedAnswer === option;
 
@@ -589,10 +801,9 @@ const router = useRouter();
                     key={i}
                     onClick={() => handleAnswer(option)}
                     disabled={answered || state.time_left === 0}
-                    className={`w-full cursor-pointer h-full flex items-center justify-center text-3xl md:text-5xl font-semibold rounded-xl shadow-lg transition-colors duration-200 ${color} ${
-                      isSelected ? "ring-4 ring-indigo-300" : ""
-                    } ${answered ? "!text-sky-100 opacity-60 !cursor-not-allowed" : "text-white"} min-h-[120px] md:min-h-[180px]`}
-                    style={{ fontSize: "2.5rem", padding: "2rem" }}
+                    className={`w-full cursor-pointer h-full flex items-center justify-center text-4xl font-semibold rounded-xl shadow-lg transition-all duration-200 ${colors[i]} ${
+                      isSelected ? "ring-4 ring-indigo-300 scale-95" : ""
+                    } ${answered ? "!text-sky-100 opacity-60 !cursor-not-allowed" : "text-white"} p-8`}
                   >
                     {option}
                   </button>

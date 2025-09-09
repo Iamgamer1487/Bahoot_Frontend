@@ -294,29 +294,28 @@ export default function EditSetPage() {
         </div>
             {/* main area */}
         <div className="flex-1 relative flex flex-col justify-start items-center pt-12 bg-slate-950">
-          <button
-            onClick={() => {
-              resetModalState();
-              setIsOpen(true);
-            }}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white w-4/5 px-6 py-3 cursor-pointer rounded-xl shadow-xl font-bold text-2xl transition-all absolute top-10"
-          >
-            +
-          </button>
-
+<button
+  onClick={() => {
+    resetModalState();
+    setIsOpen(true);
+  }}
+  className="absolute top-10 w-4/5 px-6 py-3 text-white text-2xl font-bold bg-emerald-600 rounded-xl cursor-pointer shadow-[0_4px_0_#065f46] active:shadow-[0_2px_0_#065f46] active:translate-y-[2px] transition-all duration-150 hover:bg-emerald-700"
+>
+  +
+</button>
           {!isOpen && (
             <><p className="text-gray-400 text-lg mt-20 select-none px-6 max-w-xl text-center">
-              Select a question from the left to edit or press the + button to add a new question.</p>
-            <button
-  className="absolute bg-emerald-700 p-3 px-4 rounded-lg cursor-pointer m-2 hover:bg-emerald-800 transition-all right-0 bottom-0"
+              Select a question from the left to edit or press the + button to add a new question.</p><button
+className="absolute right-0 bottom-0 m-2 px-5 py-2 text-white font-bold bg-emerald-700 rounded-lg cursor-pointer shadow-[0_4px_0_#065f46] active:shadow-[0_2px_0_#065f46] active:translate-y-[2px] transition-all duration-150 hover:bg-emerald-800"
+
   onClick={() => {
     toast.success("Set saved successfully!", toastOptions);
     router.push("/dashboard");
   }}
 >
   Save set
-</button></>
-          )}
+</button>
+</>)}
 
           {isOpen && (
             <div className="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm flex items-center justify-center px-4">
@@ -336,13 +335,12 @@ export default function EditSetPage() {
                         onChange={(e) => setTimer(Number(e.target.value))}
                         className="w-14 bg-gray-800 border border-gray-600 text-white px-2 py-1 rounded focus:outline-none"
                       />
-                    </div>
-                    <button
-                      onClick={() => setIsOpen(false)}
-                      className="text-white text-3xl cursor-pointer hover:text-gray-300"
-                    >
-                      &times;
-                    </button>
+                    </div><button
+  onClick={() => setIsOpen(false)}
+  className="text-white text-3xl font-bold cursor-pointer transition-all duration-150 hover:text-gray-300 active:scale-95"
+>
+  &times;
+</button>
                   </div>
                 </div>
 
@@ -411,19 +409,18 @@ export default function EditSetPage() {
                             >
                               {ans}
                             </span>
-                          ) : (
-                            <input
-                              type="text"
-                              placeholder={`Option ${i + 1}`}
-                              value={ans}
-                              onChange={(e) => {
-                                const updated = [...answers];
-                                updated[i] = e.target.value;
-                                setAnswers(updated);
-                              }}
-                              className="flex-1 bg-transparent border-none focus:outline-none text-white"
-                            />
-                          )}
+                          ) : (<input
+  type="text"
+  placeholder={`Option ${i + 1}`}
+  value={ans}
+  onChange={(e) => {
+    const updated = [...answers];
+    updated[i] = e.target.value;
+    setAnswers(updated);
+  }}
+  className="flex-1 bg-transparent border-none focus:outline-none text-white"
+/>
+)}
                         </label>
                       </div>
                     ))}
@@ -431,12 +428,12 @@ export default function EditSetPage() {
                 </div>
 
                 <div className="bg-gray-800 p-4 flex justify-end">
-                  <button
-                    onClick={handleSave}
-                    className="bg-emerald-600 cursor-pointer hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-semibold transition-colors"
-                  >
-                    Save
-                  </button>
+<button
+  onClick={handleSave}
+  className="px-6 py-2 text-white font-bold bg-emerald-600 rounded-lg cursor-pointer shadow-[0_4px_0_#065f46] active:shadow-[0_2px_0_#065f46] active:translate-y-[2px] transition-all duration-150 hover:bg-emerald-700"
+>
+  Save
+</button>
                 </div>
               </div>
             </div>

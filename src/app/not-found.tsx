@@ -21,7 +21,7 @@ export default function NotFound() {
               </p>
               <button
                   onClick={go}
-                  className="bg-emerald-600 cursor-pointer hover:bg-emerald-700 text-black font-bold py-3 px-6 rounded-xl transition-colors duration-200 shadow-lg"
+                  className="bg-emerald-600 cursor-pointer hover:bg-emerald-700 text-black font-bold py-3 px-6 rounded-xl shadow-[0_4px_0_#065f46] active:shadow-[0_2px_0_#065f46] active:translate-y-[2px] transition-all duration-150 ease-out"
               >
                   Go Back Home
               </button>

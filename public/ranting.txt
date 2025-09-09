@@ -5,3 +5,25 @@ deploying keeps failing smh ok
 
 i am going to fucking crash out if cors blocks the request again
 stupid cors
+
+
+        *                                      '                 ..
+ '      |           .     * '                         +*               .
+ *     -+-  |     '          '                       .    '
+        | - o -                                          *
+            |  *                                 '                         +~~
+  .           '     o '     *            +                              *  *
+    +           *                                                    .
+                                             .:'                 .          |
+'           \     *                    '*_.::'                   '         -+-
+             \                          (_.'     *                     *    |  .
+ .            *                           .        '               .    *
+            .              .:'          o           '               .:'   *
+                     ' _.::'       *.                           _.::'          '
+                      (_.'              '     .  o'            (_.'           o
+   '             +     .            .
+                                   .
+                .      '        .    '   /                   *        .:'
+   .-.   '                              / +'                      _.::' +
+  (   )       o    +                   *        +        '    '  (_.'
+   `-'                                             .    *               .      +

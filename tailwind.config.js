@@ -4,7 +4,35 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
-    extend: {
+extend: {
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        fadeInOut: {
+          '0%, 100%': { opacity: '0.2' },
+          '10%, 90%': { opacity: '1' },
+        },
+      },
+      animation: {
+        marquee: 'marquee 30s linear infinite',
+        fadeInOut: 'fadeInOut 6s ease-in-out infinite',
+      },
+  keyframes: {
+    fadeIn: {
+      '0%': { opacity: '0', transform: 'scale(0.95)' },
+      '100%': { opacity: '1', transform: 'scale(1)' },
+    },
+    fadeOut: {
+      '0%': { opacity: '1', transform: 'scale(1)' },
+      '100%': { opacity: '0', transform: 'scale(0.95)' },
+    },
+  },
+  animation: {
+    fadeIn: 'fadeIn 0.3s ease-out forwards',
+    fadeOut: 'fadeOut 0.2s ease-out forwards',
+  },
       keyframes: {
         fromTop: {
           "0%": { transform: "translateY(-100%)", opacity: "0" },
