@@ -168,7 +168,7 @@ export default function StartGameHost() {
     }
   }
 
-  async function changeGamemode(gameId) {
+  async function changeGamemode(gameId: String) {
     console.log("Change Gamemode");
   }
 
