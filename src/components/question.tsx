@@ -43,13 +43,303 @@ export function SetSection() {
     setIsCreatingSet(true);
     try {
       const res = await fetch(
-        `https://backend-bahoot.vercel.app/make_set/${user.uid}`,
+        `http://127.0.0.1:5000/json_to_set/${user.uid}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             question_set_name: setName || "Untitled Set",
             private: isPrivate,
+            Questions: [
+              {
+                "type": "multiple",
+                "question": "Which sorting algorithm has the best average-case efficiency?",
+                "choices": ["Selection Sort", "Bubble Sort", "Merge Sort", "Insertion Sort"],
+                "answer": "Merge Sort",
+                "timer": 20
+              },
+              {
+                "type": "multiple",
+                "question": "The data structure best suited for breadth-first search (BFS) in a graph is:",
+                "choices": ["Stack", "Queue", "Hash Table", "Binary Tree"],
+                "answer": "Queue",
+                "timer": 20
+              },
+              {
+                "type": "multiple",
+                "question": "Which Boolean expression matches the truth table of an XNOR gate?",
+                "choices": [
+                  "(A AND B) OR (¬A AND ¬B)",
+                  "(A AND ¬B) OR (¬A AND B)",
+                  "(A OR B) AND (¬A OR ¬B)",
+                  "A OR ¬B"
+                ],
+                "answer": "(A AND B) OR (¬A AND ¬B)",
+                "timer": 20
+              },
+              {
+                "type": "multiple",
+                "question": "Convert binary 110110 to decimal:",
+                "choices": ["52", "54", "56", "58"],
+                "answer": "54",
+                "timer": 15
+              },
+              {
+                "type": "multiple",
+                "question": "A CPU cache improves performance because:",
+                "choices": [
+                  "It is larger than main memory",
+                  "It is non-volatile",
+                  "It is closer and faster to access than RAM",
+                  "It stores permanent data"
+                ],
+                "answer": "It is closer and faster to access than RAM",
+                "timer": 15
+              },
+              {
+                "type": "multiple",
+                "question": "Which of the following is not a characteristic of OOP?",
+                "choices": ["Encapsulation", "Inheritance", "Abstraction", "Recursion"],
+                "answer": "Recursion",
+                "timer": 20
+              },
+              {
+                "type": "multiple",
+                "question": "In operating systems, which scheduling policy ensures each process gets a time slice in turn?",
+                "choices": ["FCFS", "SJN", "Round Robin", "Priority Scheduling"],
+                "answer": "Round Robin",
+                "timer": 20
+              },
+              {
+                "type": "multiple",
+                "question": "The maximum number of edges in an undirected simple graph with 7 vertices is:",
+                "choices": ["21", "42", "28", "14"],
+                "answer": "21",
+                "timer": 20
+              },
+              {
+                "type": "multiple",
+                "question": "Which Internet protocol is responsible for assigning IP addresses dynamically?",
+                "choices": ["DNS", "DHCP", "HTTP", "FTP"],
+                "answer": "DHCP",
+                "timer": 15
+              },
+              {
+                "type": "multiple",
+                "question": "If a recursive function calls itself twice for each input of size n, the recurrence relation is:",
+                "choices": [
+                  "T(n) = T(n–1) + O(1)",
+                  "T(n) = 2T(n–1) + O(1)",
+                  "T(n) = T(n/2) + O(1)",
+                  "T(n) = nT(n–1)"
+                ],
+                "answer": "T(n) = 2T(n–1) + O(1)",
+                "timer": 25
+              },
+              {
+                "type": "boolean",
+                "question": "Breadth-first search (BFS) uses a stack.",
+                "choices": ["True", "False"],
+                "answer": "False",
+                "timer": 15
+              },
+              {
+                "type": "boolean",
+                "question": "Binary search requires the array to be sorted.",
+                "choices": ["True", "False"],
+                "answer": "True",
+                "timer": 15
+              },
+              {
+                "type": "boolean",
+                "question": "In Big-O notation, O(n log n) is asymptotically faster than O(n^2).",
+                "choices": ["True", "False"],
+                "answer": "True",
+                "timer": 15
+              },
+              {
+                "type": "boolean",
+                "question": "ROM is volatile memory.",
+                "choices": ["True", "False"],
+                "answer": "False",
+                "timer": 15
+              },
+              {
+                "type": "boolean",
+                "question": "In Boolean algebra, A AND (NOT A) = 0.",
+                "choices": ["True", "False"],
+                "answer": "True",
+                "timer": 15
+              },
+              {
+                "type": "multiple",
+                "question": "Which scheduling algorithm can cause starvation?",
+                "choices": ["FCFS", "Round Robin", "Shortest Job Next", "Lottery Scheduling"],
+                "answer": "Shortest Job Next",
+                "timer": 20
+              },
+              {
+                "type": "multiple",
+                "question": "Which data structure is used in a recursive function call stack?",
+                "choices": ["Queue", "Heap", "Stack", "Graph"],
+                "answer": "Stack",
+                "timer": 20
+              },
+              {
+                "type": "multiple",
+                "question": "In networking, which device operates at Layer 2 of the OSI model?",
+                "choices": ["Router", "Switch", "Repeater", "Firewall"],
+                "answer": "Switch",
+                "timer": 20
+              },
+              {
+                "type": "multiple",
+                "question": "Which algorithm is commonly used for shortest paths in weighted graphs (no negative edges)?",
+                "choices": ["Kruskal's", "Prim's", "Dijkstra's", "Bellman-Ford"],
+                "answer": "Dijkstra's",
+                "timer": 20
+              },
+              {
+                "type": "multiple",
+                "question": "Which is NOT a stable sorting algorithm?",
+                "choices": ["Merge Sort", "Insertion Sort", "Quick Sort", "Bubble Sort"],
+                "answer": "Quick Sort",
+                "timer": 20
+              },
+              {
+                "type": "boolean",
+                "question": "A full binary tree with n internal nodes has n+1 leaves.",
+                "choices": ["True", "False"],
+                "answer": "True",
+                "timer": 15
+              },
+              {
+                "type": "boolean",
+                "question": "TCP provides reliable, ordered delivery of packets.",
+                "choices": ["True", "False"],
+                "answer": "True",
+                "timer": 15
+              },
+              {
+                "type": "boolean",
+                "question": "The maximum degree of a vertex in a simple graph with n vertices is n–1.",
+                "choices": ["True", "False"],
+                "answer": "True",
+                "timer": 15
+              },
+              {
+                "type": "boolean",
+                "question": "In assembly, the instruction MOV copies data between registers or memory.",
+                "choices": ["True", "False"],
+                "answer": "True",
+                "timer": 15
+              },
+              {
+                "type": "boolean",
+                "question": "Dynamic programming always provides faster algorithms than greedy methods.",
+                "choices": ["True", "False"],
+                "answer": "False",
+                "timer": 15
+              },
+              {
+                "type": "multiple",
+                "question": "Which of the following is an NP-complete problem?",
+                "choices": ["Dijkstra's", "Traveling Salesman", "Merge Sort", "Binary Search"],
+                "answer": "Traveling Salesman",
+                "timer": 25
+              },
+              {
+                "type": "multiple",
+                "question": "In Big-O notation, which of the following grows fastest?",
+                "choices": ["O(n)", "O(n log n)", "O(2^n)", "O(n^2)"],
+                "answer": "O(2^n)",
+                "timer": 20
+              },
+              {
+                "type": "multiple",
+                "question": "Which traversal of a binary search tree gives sorted order?",
+                "choices": ["Preorder", "Postorder", "Inorder", "Level-order"],
+                "answer": "Inorder",
+                "timer": 20
+              },
+              {
+                "type": "multiple",
+                "question": "Which memory is the fastest?",
+                "choices": ["Cache", "RAM", "SSD", "Hard Disk"],
+                "answer": "Cache",
+                "timer": 15
+              },
+              {
+                "type": "multiple",
+                "question": "The truth table of an XOR gate is equivalent to:",
+                "choices": ["A == B", "A != B", "A OR B", "NOT A"],
+                "answer": "A != B",
+                "timer": 20
+              },
+              {
+                "type": "boolean",
+                "question": "IPv6 addresses are 128 bits long.",
+                "choices": ["True", "False"],
+                "answer": "True",
+                "timer": 15
+              },
+              {
+                "type": "boolean",
+                "question": "Recursion always uses more memory than iteration.",
+                "choices": ["True", "False"],
+                "answer": "False",
+                "timer": 15
+              },
+              {
+                "type": "boolean",
+                "question": "Merge sort is a divide and conquer algorithm.",
+                "choices": ["True", "False"],
+                "answer": "True",
+                "timer": 15
+              },
+              {
+                "type": "boolean",
+                "question": "Binary trees can never be unbalanced.",
+                "choices": ["True", "False"],
+                "answer": "False",
+                "timer": 15
+              },
+              {
+                "type": "boolean",
+                "question": "In object-oriented programming, polymorphism allows methods to have the same name but different implementations.",
+                "choices": ["True", "False"],
+                "answer": "True",
+                "timer": 15
+              },
+              {
+                "type": "multiple",
+                "question": "Which data structure is best for implementing undo in a text editor?",
+                "choices": ["Queue", "Stack", "Heap", "Graph"],
+                "answer": "Stack",
+                "timer": 20
+              },
+              {
+                "type": "multiple",
+                "question": "Which algorithm is typically used for constructing minimum spanning trees?",
+                "choices": ["Dijkstra's", "Kruskal's", "Bellman-Ford", "DFS"],
+                "answer": "Kruskal's",
+                "timer": 20
+              },
+              {
+                "type": "multiple",
+                "question": "Which component executes instructions in a CPU?",
+                "choices": ["Control Unit", "ALU", "Cache", "Registers"],
+                "answer": "ALU",
+                "timer": 20
+              },
+              {
+                "type": "multiple",
+                "question": "Which data structure supports O(1) average time for insertion and lookup?",
+                "choices": ["Stack", "Hash Table", "Linked List", "Binary Search Tree"],
+                "answer": "Hash Table",
+                "timer": 20
+              }
+            ]
           }),
         }
       );

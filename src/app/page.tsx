@@ -159,7 +159,7 @@ export default function Home() {
         Bahoot is a free educational tool that can help students learn and grasp concepts in a fun and educational way. <br /> <br />
         Start by <Link className="text-indigo-400" href={"/login"}> creating an account </Link> and making a set, and invite others to join your game!
       </p>
-    </div><div className="bg-gradient-to-br from-gray-800 via-slate-700 to-slate-800 p-8 rounded-2xl shadow-lg w-full">
+    </div><div className="bg-gradient-to-br from-gray-800 via-slate-700 to-slate-800 p-8 rounded-2xl shadow-lg w-full hover:shadow-xl hover:scale-[1.01] transition-all duration-300">
   <h1 className="font-extrabold text-4xl md:text-5xl text-center text-white mb-10">
     What Our Users Say
   </h1>

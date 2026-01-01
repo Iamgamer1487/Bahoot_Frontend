@@ -206,7 +206,8 @@ f
 >
   <img src="/google.svg" alt="G" className="w-6 h-6" />
   Google
-</button><button
+</button>
+{/* <button
   onClick={handleDiscordSignIn}
   className="
     flex items-center justify-center gap-3 py-3 rounded-full font-semibold text-white cursor-pointer
@@ -227,7 +228,7 @@ f
   </svg>
   Discord
 </button>
-
+ */}
             </div>
           </>
         )}

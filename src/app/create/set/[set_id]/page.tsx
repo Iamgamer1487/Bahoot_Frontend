@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import Switch from "react-switch";
@@ -8,7 +9,7 @@ import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/libs/firebase";
 import { useParams,useRouter } from "next/navigation";
 
-import "react-toastify/dist/ReactToastify.css";
+// import "react-toastify/dist/ReactToastify.css"; //typescript-eslint/no-unused-vars
 
 type FullQuestion = {
   type: "multiple" | "boolean";

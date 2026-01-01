@@ -41,12 +41,15 @@ export default function Leaderboard({ title = "Leaderboard" }: LeaderboardProps)
 
   async function fetchNicknames(id: string) {
     try {
-      const res = await fetch(`https://backend-bahoot.vercel.app/game_players_display_names/${id}`, {
+      const res = await fetch(`https://backend-bahoot.vercel.app/game_players_display_names`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ game_id: id }), // Send game_id in the body
       });
       const data = await res.json();
-      setNicknames(data || {});
+      if (data.players) {
+        setNicknames(data.players || {});
+      }
     } catch (err) {
       console.error("failed to fetch nicknames", err);
     }
@@ -60,10 +63,13 @@ export default function Leaderboard({ title = "Leaderboard" }: LeaderboardProps)
       });
       const data = await res.json();
       let lb: LeaderboardEntry[] = data.leaderboard || [];
+
+      // Map nicknames to leaderboard entries
       lb = lb.map((entry) => ({
         ...entry,
         user_name: nicknames[entry.uid ?? ""] || entry.user_name || "Unnamed",
       }));
+
       prevLbRef.current = leaderboard;
       setLeaderboard(lb);
     } catch (err) {
@@ -119,7 +125,14 @@ export default function Leaderboard({ title = "Leaderboard" }: LeaderboardProps)
     fetchGameId();
   }, []);
 
-  // polling nicknames & question state every 2s, only update leaderboard at end
+  // Update leaderboard when nicknames change
+  useEffect(() => {
+    if (gameId && Object.keys(nicknames).length > 0) {
+      fetchLeaderboard(gameId);
+    }
+  }, [nicknames, gameId]);
+
+  // polling nicknames & question state every 2s
   useEffect(() => {
     if (!gameId) return;
 
@@ -129,11 +142,10 @@ export default function Leaderboard({ title = "Leaderboard" }: LeaderboardProps)
     const interval = setInterval(() => {
       fetchNicknames(gameId);
       checkQuestionState(gameId);
-      if (questionExpired) fetchLeaderboard(gameId);
     }, 2000);
 
     return () => clearInterval(interval);
-  }, [gameId, questionExpired]);
+  }, [gameId]);
 
   // timer countdown
   useEffect(() => {

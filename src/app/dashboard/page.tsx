@@ -1,7 +1,7 @@
 "use client";
 
+import { GraduationCap, Trash2, PencilLine, Gamepad2,Book,} from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { GraduationCap, Trash2, PencilLine, Gamepad2,Book, } from "lucide-react";
 import { auth } from "@/libs/firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { useRouter } from "next/navigation";
@@ -38,8 +38,8 @@ function CustomDialog({
         <div className="px-6 py-4 flex justify-end gap-3 border-t border-slate-700">
           {cancelText && (
             <button
-              onClick={onCancel}
-              className="px-4 py-2 rounded-lg cursor-pointer bg-gray-700 hover:bg-gray-600 text-white font-semibold transition"
+            onClick={onCancel}
+            className="px-4 py-2 rounded-lg cursor-pointer bg-gray-700 hover:bg-gray-600 text-white font-semibold transition"
             >
               {cancelText}
             </button>
@@ -47,7 +47,7 @@ function CustomDialog({
           <button
             onClick={onConfirm}
             className="px-4 py-2 rounded-lg cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white font-semibold shadow-[0_4px_0_#065f46] active:shadow-[0_2px_0_#065f46] active:translate-y-[2px] transition"
-          >
+            >
             {confirmText}
           </button>
         </div>
@@ -231,7 +231,7 @@ export default function AllSets() {
           title: "Not Logged In",
           message: "You are not logged in. Log in to view your sets.",
           confirmText: "OK",
-          onConfirm: () => router.push("/"),
+          onConfirm: () => router.push("/login"),
         });
       }
     });
