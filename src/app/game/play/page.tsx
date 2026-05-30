@@ -3,6 +3,7 @@
 import React, { JSX, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "@/libs/firebase";
+import { API_BASE } from "@/libs/backend";
 import { doc, onSnapshot } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 type QuestionState = {
@@ -452,7 +453,7 @@ const router = useRouter();
       }
       try {
         const res = await fetch(
-          `https://backend-bahoot.vercel.app/user_game_player/` + user.uid,
+          `${API_BASE}/user_game_player/` + user.uid,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -593,7 +594,7 @@ const router = useRouter();
         setFeedback(`Time's up! You didn't answer. Correct Answer is: ${state.correct_answer}`);
 
         try {
-          await fetch(`https://backend-bahoot.vercel.app/answer/` + gameId, {
+          await fetch(`${API_BASE}/answer/` + gameId, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -609,7 +610,7 @@ const router = useRouter();
 
       try {
         const scoreRes = await fetch(
-          `https://backend-bahoot.vercel.app/leaderboard/` + gameId,
+          `${API_BASE}/leaderboard/` + gameId,
           {
             method: "POST",
           }
@@ -646,7 +647,7 @@ const router = useRouter();
 
     try {
       const res = await fetch(
-        `https://backend-bahoot.vercel.app/answer/` + gameId,
+        `${API_BASE}/answer/` + gameId,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -684,7 +685,7 @@ const router = useRouter();
     if (!sure) return;
 
     try {
-      await fetch(`https://backend-bahoot.vercel.app/leave_game/` + gameId, {
+      await fetch(`${API_BASE}/leave_game/` + gameId, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ player_id: playerId }),

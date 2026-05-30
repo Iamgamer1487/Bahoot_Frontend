@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { getAuth } from "firebase/auth";
 import router from "next/router";
 import { motion } from "framer-motion";
+import { API_BASE } from "@/libs/backend";
 
 type LeaderboardEntry = {
   rank: number;
@@ -28,7 +29,7 @@ export default function Leaderboard({ title = "Leaderboard" }: LeaderboardProps)
     const uid = getAuth().currentUser?.uid;
     if (!uid) return;
     try {
-      const res = await fetch(`https://backend-bahoot.vercel.app/user_game_host/${uid}`, {
+      const res = await fetch(`${API_BASE}/user_game_host/${uid}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });
@@ -41,7 +42,7 @@ export default function Leaderboard({ title = "Leaderboard" }: LeaderboardProps)
 
   async function fetchNicknames(id: string) {
     try {
-      const res = await fetch(`https://backend-bahoot.vercel.app/game_players_display_names`, {
+      const res = await fetch(`${API_BASE}/game_players_display_names`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ game_id: id }), // Send game_id in the body
@@ -57,7 +58,7 @@ export default function Leaderboard({ title = "Leaderboard" }: LeaderboardProps)
 
   async function fetchLeaderboard(id: string) {
     try {
-      const res = await fetch(`https://backend-bahoot.vercel.app/leaderboard/${id}`, {
+      const res = await fetch(`${API_BASE}/leaderboard/${id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });
@@ -79,7 +80,7 @@ export default function Leaderboard({ title = "Leaderboard" }: LeaderboardProps)
 
   async function checkQuestionState(id: string) {
     try {
-      const res = await fetch("https://backend-bahoot.vercel.app/get_question_state", {
+      const res = await fetch(`${API_BASE}/get_question_state`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ game_id: id }),
@@ -105,7 +106,7 @@ export default function Leaderboard({ title = "Leaderboard" }: LeaderboardProps)
     const user = getAuth().currentUser?.uid;
     if (!user || !gameId) return;
     try {
-      const res = await fetch(`https://backend-bahoot.vercel.app/next_question/${gameId}`, {
+      const res = await fetch(`${API_BASE}/next_question/${gameId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id: user }),

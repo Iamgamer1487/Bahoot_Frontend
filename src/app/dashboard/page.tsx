@@ -4,6 +4,7 @@ import { GraduationCap, Trash2, PencilLine, Gamepad2,Book,} from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { auth } from "@/libs/firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
+import { API_BASE } from "@/libs/backend";
 import { useRouter } from "next/navigation";
 import { SetSection } from "@/components/question";
 import { Sidebar } from "@/components/sidebar";
@@ -72,7 +73,7 @@ export default function AllSets() {
 
   async function fetchSet(uid: string): Promise<Set[]> {
     try {
-      const res = await fetch(`https://backend-bahoot.vercel.app/send_set_id/${uid}`, {
+      const res = await fetch(`${API_BASE}/send_set_id/${uid}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });
@@ -94,7 +95,7 @@ export default function AllSets() {
       onConfirm: async () => {
         setDialog(null);
         try {
-          const res = await fetch(`https://backend-bahoot.vercel.app/delete_set/${user.uid}/${setId}`, {
+          const res = await fetch(`${API_BASE}/delete_set/${user.uid}/${setId}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
           });
@@ -130,7 +131,7 @@ export default function AllSets() {
   const onEditSet = async (setId: string) => {
     if (!user) return;
     try {
-      const res = await fetch(`https://backend-bahoot.vercel.app/validate_set_id/${user.uid}/${setId}`, {
+      const res = await fetch(`${API_BASE}/validate_set_id/${user.uid}/${setId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });
@@ -166,7 +167,7 @@ export default function AllSets() {
       return;
     }
     try {
-      const res = await fetch(`https://backend-bahoot.vercel.app/create_game/false`, {
+      const res = await fetch(`${API_BASE}/create_game/false`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ host_id: user.uid }),
@@ -194,7 +195,7 @@ export default function AllSets() {
         return;
       }
       const questionsRes = await fetch(
-        `https://backend-bahoot.vercel.app/send_questions_game/${user.uid}/${game_id}/${set_id}`,
+        `${API_BASE}/send_questions_game/${user.uid}/${game_id}/${set_id}`,
         { method: "POST", headers: { "Content-Type": "application/json" } }
       );
       if (!questionsRes.ok) {

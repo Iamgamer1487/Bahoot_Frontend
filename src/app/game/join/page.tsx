@@ -1,6 +1,7 @@
 "use client";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/libs/firebase";
+import { API_BASE } from "@/libs/backend";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -66,8 +67,7 @@ const handleJoin = async (e: React.FormEvent) => {
   setLoading(true);
 
   try {
-    const res = await fetch(`https://backend-bahoot.vercel.app/join_game/${gameId.trim()}`, {
-      method: "POST",
+      const res = await fetch(`${API_BASE}/join_game/${gameId.trim()}`, {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         player_id: user?.uid,

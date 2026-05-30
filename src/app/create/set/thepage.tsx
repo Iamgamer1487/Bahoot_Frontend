@@ -6,6 +6,7 @@ import { AlarmClock, Trash2, PencilLine, X } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/libs/firebase";
+import { API_BASE } from "@/libs/backend";
 type FullQuestion = {
   type: "multiple" | "boolean";
   question: string;
@@ -58,6 +59,9 @@ export default function Make() {
   const sidebarRef = useRef<HTMLDivElement>(null);
   const [isResizing, setIsResizing] = useState(false);
     const [user, setUser] = useState<User | null>(null);
+  const [numQuestions, setNumQuestions] = useState(5);
+  const [shuffleQuestions, setShuffleQuestions] = useState(true);
+  const [generating, setGenerating] = useState(false);
 
   useEffect(() => {
     setAnswers(isTrueFalse ? ["True", "False"] : ["", "", "", ""]);
@@ -181,7 +185,7 @@ const handleDelete = async (index: number) => {
   };
 
 
-  const res = await fetch(`http://127.0.0.1:5000/delete_question/YOUR_SET_ID_HERE`, {
+  const res = await fetch(`${API_BASE}/delete_question/YOUR_SET_ID_HERE`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ question_id: index + 1 })
@@ -196,6 +200,7 @@ const handleDelete = async (index: number) => {
     toast.error(err?.error || "Failed to delete.", errorToastOptions);
   }
 };
+ 
 
 
   return (
@@ -215,18 +220,9 @@ const handleDelete = async (index: number) => {
             className="absolute right-0 top-0 bottom-0 w-2 cursor-col-resize hover:bg-emerald-500 active:bg-emerald-600 transition-colors"
             onMouseDown={() => setIsResizing(true)}
           />
-             <button   onClick={() => {
-    const output = {
-      Questions: questions.map((q) => ({
-        type: q.isTrueFalse ? "boolean" : "multiple",
-        question: q.question,
-        choices: q.answers,
-        answer: q.answers[q.correctIndex ?? 0],
-        timer: q.timer,
-      })),
-    };
-    console.log(JSON.stringify(output, null, 2));
-  }}className="bg-slate-800 p-3 rounded-lg cursor-pointer justify-center text-center items-center hover:bg-slate-700 transition-all"><p className="text-center items-center justify-center"></p>Save set</button>
+             <div className="flex flex-col gap-3">
+               
+             </div>
           {!collapsed && (
             <>
               <h2 className="text-xl font-bold text-emerald-400">Your Questions</h2>
@@ -383,6 +379,8 @@ const handleDelete = async (index: number) => {
         </div>
       </div>
 
+      
+
       <style global jsx>{`
         @keyframes fade-in {
           0% {
@@ -433,4 +431,5 @@ const handleDelete = async (index: number) => {
       />
     </>
   );
+  
 }

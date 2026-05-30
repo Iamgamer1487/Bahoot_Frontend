@@ -5,6 +5,7 @@ import { Book, Gamepad2, UserRoundMinus, Power } from "lucide-react";
 import { SetSection } from "@/components/question";
 import { auth } from "@/libs/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { API_BASE } from "@/libs/backend";
 
 export function Sidebar() {
   const router = useRouter();
@@ -20,7 +21,7 @@ export function Sidebar() {
       if (uid) {
         try {
           // Check if user is a player
-          const playerRes = await fetch(`https://backend-bahoot.vercel.app/user_game_player/${uid}`, {
+          const playerRes = await fetch(`${API_BASE}/user_game_player/${uid}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
           });
@@ -30,7 +31,7 @@ export function Sidebar() {
           }
 
           // Check if user is a host
-          const hostRes = await fetch(`https://backend-bahoot.vercel.app/user_game_host/${uid}`, {
+          const hostRes = await fetch(`${API_BASE}/user_game_host/${uid}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
           });
@@ -51,7 +52,7 @@ export function Sidebar() {
     if (!window.confirm("Leave the current game? You will lose your score.")) return;
 
     try {
-      await fetch(`https://backend-bahoot.vercel.app/leave_game/${playerGameId}`, {
+      await fetch(`${API_BASE}/leave_game/${playerGameId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ player_id: playerId }),
@@ -67,7 +68,7 @@ export function Sidebar() {
     if (!window.confirm("End your hosted game? This will disconnect all players.")) return;
 
     try {
-      await fetch(`https://backend-bahoot.vercel.app/game_over`, {
+      await fetch(`${API_BASE}/game_over`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ game_id: hostGameId }),

@@ -5,6 +5,7 @@ import Head from "next/head";
 import { Settings2 } from "lucide-react";
 import Leaderboard from "@/components/lead";
 import { auth } from "@/libs/firebase";
+import { API_BASE } from "@/libs/backend";
 import { useRouter } from "next/navigation";
 
 export default function StartGameHost() {
@@ -24,7 +25,7 @@ export default function StartGameHost() {
   async function fetchPlayerNames(gameId: string) {
     try {
       const res = await fetch(
-        `https://backend-bahoot.vercel.app/game_players_display_names`,
+        `${API_BASE}/game_players_display_names`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -53,7 +54,7 @@ export default function StartGameHost() {
     if (!gameId) return;
     try {
       const res = await fetch(
-        `https://backend-bahoot.vercel.app/game_players_display_names`,
+        `${API_BASE}/game_players_display_names`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -72,7 +73,7 @@ export default function StartGameHost() {
 
       try {
         const res = await fetch(
-          `https://backend-bahoot.vercel.app/user_game_host/${u.uid}`,
+          `${API_BASE}/user_game_host/${u.uid}`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -111,7 +112,7 @@ export default function StartGameHost() {
     const interval = setInterval(async () => {
       try {
         const res = await fetch(
-          `https://backend-bahoot.vercel.app/game_state_check/${gameId}`,
+          `${API_BASE}/game_state_check/${gameId}`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -132,7 +133,7 @@ export default function StartGameHost() {
     try {
       setGameStarted(true);
       const res = await fetch(
-        `https://backend-bahoot.vercel.app/start_game/${gameId}`,
+        `${API_BASE}/start_game/${gameId}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -157,7 +158,7 @@ export default function StartGameHost() {
     if (!window.confirm("Are you sure you want to end this game?")) return;
 
     try {
-      const res = await fetch(`https://backend-bahoot.vercel.app/game_over`, {
+      const res = await fetch(`${API_BASE}/game_over`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ game_id: gameId }),

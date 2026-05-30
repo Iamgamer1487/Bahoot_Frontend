@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { User } from "firebase/auth";
 import { auth } from "@/libs/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { API_BASE } from "@/libs/backend";
 import { useRouter } from "next/navigation";
 import { CirclePlus } from "lucide-react";
 
@@ -43,7 +44,7 @@ export function SetSection() {
     setIsCreatingSet(true);
     try {
       const res = await fetch(
-        `http://127.0.0.1:5000/json_to_set/${user.uid}`,
+        `${API_BASE}/json_to_set/${user.uid}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

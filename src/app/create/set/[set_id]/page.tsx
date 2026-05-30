@@ -7,6 +7,7 @@ import { AlarmClock, Trash2, PencilLine } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/libs/firebase";
+import { API_BASE } from "@/libs/backend";
 import { useParams,useRouter } from "next/navigation";
 
 // import "react-toastify/dist/ReactToastify.css"; //typescript-eslint/no-unused-vars
@@ -69,7 +70,62 @@ export default function EditSetPage() {
   const params = useParams();
   const setId = params?.set_id as string;
 
-  const API_BASE = `https://backend-bahoot.vercel.app`;
+  const [showGenerateModal, setShowGenerateModal] = useState(false);
+  const [quizContext, setQuizContext] = useState("");
+  const [numQuestions, setNumQuestions] = useState(5);
+  const [shuffleQuestions, setShuffleQuestions] = useState(true);
+  const [generating, setGenerating] = useState(false);
+
+  const handleGenerateQuiz = async () => {
+    if (!quizContext.trim()) {
+      toast.error("Please enter a quiz topic.", toastOptions);
+      return;
+    }
+
+    try {
+      setGenerating(true);
+
+      const response = await fetch(`${API_BASE}/generate_quiz`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          quiz_context: quizContext,
+          num_questions: numQuestions,
+          quiz_type: "multiple",
+          set_id: setId,
+          user_id: user?.uid,
+          shuffle: shuffleQuestions,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data?.error || "Failed to generate quiz");
+      }
+
+      const formatted: FullQuestion[] = data.Questions.map((q: any) => ({
+        type: q.type,
+        question: q.question,
+        answers: q.choices,
+        correctIndex: q.choices.indexOf(q.answer),
+        timer: q.timer || 20,
+        isTrueFalse: q.type === "boolean",
+      }));
+
+      setQuestions(formatted);
+      setShowGenerateModal(false);
+
+      toast.success("Quiz generated!");
+    } catch (err: any) {
+      toast.error(err.message || "Something went wrong.");
+    } finally {
+      setGenerating(false);
+    }
+  };
+
   const resetModalState = () => {
     setQuestion("");
     setAnswers(isTrueFalse ? ["True", "False"] : ["", "", "", ""]);
@@ -288,6 +344,34 @@ export default function EditSetPage() {
           />
 
           <h2 className="text-xl font-bold text-emerald-400">Your Questions</h2>
+          <div className="flex flex-col gap-3 mt-4">
+            <button
+              onClick={() => {
+                // quick save debug output (primary save handled by main Save button)
+                const output = {
+                  Questions: questions.map((q) => ({
+                    type: q.isTrueFalse ? "boolean" : "multiple",
+                    question: q.question,
+                    choices: q.answers,
+                    answer: q.answers[q.correctIndex ?? 0],
+                    timer: q.timer,
+                  })),
+                };
+                console.log(JSON.stringify(output, null, 2));
+                toast.success("Set prepared (debug).", toastOptions);
+              }}
+              className="bg-slate-800 p-3 rounded-lg cursor-pointer justify-center text-center items-center hover:bg-slate-700 transition-all"
+            >
+              Save set
+            </button>
+
+            <button
+              onClick={() => setShowGenerateModal(true)}
+              className="bg-purple-600 p-3 rounded-lg text-white hover:bg-purple-700 transition-all"
+            >
+              Generate with AI
+            </button>
+          </div>
           {questions.length === 0 && <p className="text-gray-500 text-sm">No questions yet</p>}
           {questions.map((q, i) => (
             <QuestionCard key={i} index={i} question={q} onEdit={() => handleEdit(i)} onDelete={() => handleDelete(i)} />
@@ -454,6 +538,70 @@ className="absolute right-0 bottom-0 m-2 px-5 py-2 text-white font-bold bg-emera
         pauseOnHover
         toastClassName="text-white items-center text-center select-none"
       />
+
+      {showGenerateModal && (
+        <div className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm flex items-center justify-center px-4">
+          <div className="bg-gray-900 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden">
+            <div className="bg-purple-700 px-6 py-4 flex justify-between items-center">
+              <h2 className="text-white font-bold text-lg">AI Quiz Setup</h2>
+              <button
+                onClick={() => setShowGenerateModal(false)}
+                className="text-white text-2xl hover:text-gray-300"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="p-6 space-y-5">
+              <div>
+                <label className="text-gray-300 text-sm">What should the quiz be about?</label>
+                <input
+                  value={quizContext}
+                  onChange={(e) => setQuizContext(e.target.value)}
+                  placeholder="e.g. Space, History, Minecraft..."
+                  className="w-full mt-2 px-4 py-3 rounded-xl bg-gray-800 border border-gray-600 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="text-gray-300 text-sm">Number of questions</label>
+                <input
+                  type="number"
+                  min={1}
+                  max={50}
+                  value={numQuestions}
+                  onChange={(e) => setNumQuestions(Number(e.target.value))}
+                  className="w-full mt-2 px-4 py-3 rounded-xl bg-gray-800 border border-gray-600 focus:outline-none"
+                />
+              </div>
+
+              <div className="flex items-center justify-between bg-gray-800 p-4 rounded-xl">
+                <span className="text-gray-300">Shuffle questions</span>
+                <Switch
+                  checked={shuffleQuestions}
+                  onChange={setShuffleQuestions}
+                  onColor="#a855f7"
+                  offColor="#6b7280"
+                  checkedIcon={false}
+                  uncheckedIcon={false}
+                  height={20}
+                  width={40}
+                />
+              </div>
+            </div>
+
+            <div className="bg-gray-800 p-4 flex justify-end">
+              <button
+                disabled={generating}
+                onClick={handleGenerateQuiz}
+                className="bg-purple-600 hover:bg-purple-700 disabled:opacity-50 px-6 py-2 rounded-lg font-semibold"
+              >
+                {generating ? "Generating..." : "Generate Quiz"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style jsx global>{`
         @keyframes fade-in {
